@@ -1,0 +1,7 @@
+C:\Users\user\source\repos\ExpressionParser v1.1\ExpressionParser v1.1\bin\Debug\ExpressionParser v1.1.exe.config
+C:\Users\user\source\repos\ExpressionParser v1.1\ExpressionParser v1.1\bin\Debug\ExpressionParser v1.1.exe
+C:\Users\user\source\repos\ExpressionParser v1.1\ExpressionParser v1.1\bin\Debug\ExpressionParser v1.1.pdb
+C:\Users\user\source\repos\ExpressionParser v1.1\ExpressionParser v1.1\obj\Debug\ExpressionParser v1.1.csprojResolveAssemblyReference.cache
+C:\Users\user\source\repos\ExpressionParser v1.1\ExpressionParser v1.1\obj\Debug\ExpressionParser v1.1.csproj.CoreCompileInputs.cache
+C:\Users\user\source\repos\ExpressionParser v1.1\ExpressionParser v1.1\obj\Debug\ExpressionParser v1.1.exe
+C:\Users\user\source\repos\ExpressionParser v1.1\ExpressionParser v1.1\obj\Debug\ExpressionParser v1.1.pdb
