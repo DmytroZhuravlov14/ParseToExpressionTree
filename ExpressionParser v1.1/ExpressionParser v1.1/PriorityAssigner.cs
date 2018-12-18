@@ -8,7 +8,7 @@ using ExpressionParser_v1._1;
 namespace ExpressionParser_v1._1
 {
     static class PriorityAssigner
-    { 
+    {
         public static void AssignPriorities()
         {
             AssignPrioritiesUnchecked();
@@ -17,17 +17,24 @@ namespace ExpressionParser_v1._1
 
         static void AssignPrioritiesUnchecked()
         {
-
-            foreach (var item in Tokenizer.objectList)
+            List<string> no = new List<string> { "Parameter", "Number" };
+            List<string> low = new List<string> { "Plus", "Minus" };
+            List<string> mid = new List<string> { "Multiply", "Divide" };
+            List<string> high = new List<string> { "Power" };
+            Dictionary<List<string>, int> dic = new Dictionary<List<string>, int> { };
+            dic.Add(no, -1);
+            dic.Add(low, 1);
+            dic.Add(mid, 2);
+            dic.Add(high, 3);
+            foreach (var objectListItem in Tokenizer.objectList)
             {
-                if (item.Name == "Parameter" || item.Name == "Number")
-                    item.Priority = -1;
-                if (item.Name == "Plus" || item.Name == "Minus")
-                    item.Priority = 1;
-                if (item.Name == "Multiply" || item.Name == "Divide")
-                    item.Priority = 2;
-                if (item.Name == "Power")
-                    item.Priority = 3;
+                foreach (var dicItem in dic.Keys)
+                {
+                    if (dicItem.Contains(objectListItem.Name))
+                    {
+                        objectListItem.Priority = dic[dicItem];
+                    }
+                }
             }
         }
 
@@ -35,7 +42,7 @@ namespace ExpressionParser_v1._1
         {
             foreach (var item in Tokenizer.objectList)
             {
-                if(item.Priority == 0)
+                if (item.Priority == 0)
                     Console.WriteLine("Undefined object was found");
             }
         }

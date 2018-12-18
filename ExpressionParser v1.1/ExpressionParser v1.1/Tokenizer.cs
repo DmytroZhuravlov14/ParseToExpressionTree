@@ -6,103 +6,38 @@ using System.Threading.Tasks;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Linq.Expressions;
+using System.IO;
 
 namespace ExpressionParser_v1._1
 {
     static class Tokenizer
     {
-        const string numberRegex = "^[0-9]{1,}[/.][0-9]{1,}";
-        const string plusRegex = "^[/+]{1}";
-        const string minusRegex = "^[/-]{1}";
-        const string multiplyRegex = "^[/*]{1}";
-        const string divisionRegex = "^:{1}";
-        const string powerRegex = "^[/^]{1}";
-        const string parameterRegex = "^[a-zA-Z]";
+        public static List<Model> objectList;
 
-        public static List<Model> objectList = new List<Model> { };
-        static Match match;
-
-        static void DeleteWhiteSpace(ref string text)
+        static List<Parser> parsers = new List<Parser>
         {
-            if (text.Length > 1 && text[0] == ' ')
-                text = text.Remove(0, 1);
-        }
+            new Parser("^[0-9]{1,}[/.][0-9]{1,}", (value) => new Number{ Value = value }),
+            new Parser("^[a-zA-Z]{1,}", (_) => new Parameter()),
+            new Parser("^[/+]{1}", (_) => new Plus()),
+            new Parser("^[/-]{1}", (_) => new Minus()),
+            new Parser("^[/*]{1}", (_) => new Multiply()),
+            new Parser("^:{1}", (_) => new Divide()),
+            new Parser("^[/^]{1}", (_) => new Power()),
+        };
 
-        static bool RecognizeType(string text, string regex, out Match match)
+        public static List<Model> Tokenize(string input)
         {
-            Regex regExpression = new Regex(regex);
-            MatchCollection matches = regExpression.Matches(text);
-            match = matches.Count > 0 ? matches[0] : null;
-            return matches.Count > 0;
-        }
-
-        public static bool Tokenize(ref string text)
-        {
-            while (text.Length != 1)
+            string stringBuilder = new StringBuilder(input).ToString();
+            List<Model> bagList = new List<Model>();
+            while (stringBuilder != string.Empty)
             {
-                if (RecognizeType(text, numberRegex, out match))
-                {
-                    objectList.Add(new Number { Value = Convert.ToDouble(match.Value) });
-                    if (text.Length != 0)
-                        text = text.Remove(0, match.Length);
-                    DeleteWhiteSpace(ref text);
-                    Tokenize(ref text);
-                }
-                if (RecognizeType(text, plusRegex, out match))
-                {
-                    objectList.Add(new Plus());
-                    if (text.Length != 0)
-                        text = text.Remove(0, match.Length);
-                    DeleteWhiteSpace(ref text);
-                    Tokenize(ref text);
-                }
-                if (RecognizeType(text, minusRegex, out match))
-                {
-                    objectList.Add(new Minus());
-                    if (text.Length != 0)
-                        text = text.Remove(0, match.Length);
-                    DeleteWhiteSpace(ref text);
-                    Tokenize(ref text);
-                }
-                if (RecognizeType(text, multiplyRegex, out match))
-                {
-                    objectList.Add(new Multiply());
-                    if (text.Length != 0)
-                        text = text.Remove(0, match.Length);
-                    DeleteWhiteSpace(ref text);
-                    Tokenize(ref text);
-                }
-                if (RecognizeType(text, divisionRegex, out match))
-                {
-                    objectList.Add(new Divide());
-                    if (text.Length != 0)
-                        text = text.Remove(0, match.Length);
-                    DeleteWhiteSpace(ref text);
-                    Tokenize(ref text);
-                }
-                if (RecognizeType(text, powerRegex, out match))
-                {
-                    objectList.Add(new Power());
-                    if (text.Length != 0)
-                        text = text.Remove(0, match.Length);
-                    DeleteWhiteSpace(ref text);
-                    Tokenize(ref text);
-                }
-                if (RecognizeType(text, parameterRegex, out match))
-                {
-                    objectList.Add(new Parameter());
-                    if (text.Length != 0)
-                        text = text.Remove(0, match.Length);
-                    DeleteWhiteSpace(ref text);
-                    Tokenize(ref text);
-                }
-                else
-                {
-                    if (text.Length == 0)
-                        return true;
-                }
+                Parser parser = parsers.Where(p => p._regex.Match(stringBuilder).Success).First();       
+                Model dataBag = parser.Parse(stringBuilder);
+                bagList.Add(dataBag);
+                stringBuilder = stringBuilder.Remove(0, parser._regex.Match(stringBuilder).Value.Length);
+                stringBuilder = Parser.DeleteWhiteSpace(stringBuilder);
             }
-            return false;
+            return bagList;
         }
     }
 }
