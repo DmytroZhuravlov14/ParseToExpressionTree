@@ -26,12 +26,5 @@ namespace ExpressionParser_v1._1
             }
             return null;
         }
-
-        public static string DeleteWhiteSpace(string text)
-        {
-            if (text.Length > 1 && text[0] == ' ')
-                text = text.Remove(0, 1);
-            return text;
-        }
     }
 }

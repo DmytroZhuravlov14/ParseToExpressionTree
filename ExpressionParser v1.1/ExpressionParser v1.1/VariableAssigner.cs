@@ -8,11 +8,11 @@ namespace ExpressionParser_v1._1
 {
     static class VariableAssigner
     {
-        public static void AssignVariables(double a, double b)
+        public static void AssignVariables(List<Model> objectList, double a)
         {
-            List<double> inputParameters = new List<double> { a, b };
+            List<double> inputParameters = new List<double> { a };
             int counter = 0;
-            foreach (var item in Tokenizer.objectList)
+            foreach (var item in objectList)
             {
                 if (item.Name == "Parameter")
                 {

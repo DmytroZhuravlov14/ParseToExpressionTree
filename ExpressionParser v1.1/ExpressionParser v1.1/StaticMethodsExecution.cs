@@ -9,7 +9,7 @@ using System.Linq.Expressions;
 
 namespace ExpressionParser_v1._1
 {
-    static class StaticMethodsExecution
+    class StaticMethodsExecution
     {
         public static Regex WriteRegex { get; set; } = new Regex("write:");
 
