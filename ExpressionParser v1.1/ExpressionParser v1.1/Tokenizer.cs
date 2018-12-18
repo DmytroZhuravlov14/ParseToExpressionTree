@@ -12,7 +12,7 @@ namespace ExpressionParser_v1._1
 {
     class Tokenizer
     { 
-        static List<Parser> parsers = new List<Parser>
+        private List<Parser> parsers = new List<Parser>
         {
             new Parser("^[0-9]{1,}[/.][0-9]{1,}", (value) => new Number{ Value = value }),
             new Parser("^[a-zA-Z]{1,}", (_) => new Parameter()),
@@ -25,7 +25,7 @@ namespace ExpressionParser_v1._1
             new Parser("^[)]", (value) => new CloseBracket{ Value = value })
         };
 
-        public static List<Model> Tokenize(string input)
+        public List<Model> Tokenize(string input)
         {
             string stringBuilder = new StringBuilder(input).ToString();
             List<Model> bagList = new List<Model>();
