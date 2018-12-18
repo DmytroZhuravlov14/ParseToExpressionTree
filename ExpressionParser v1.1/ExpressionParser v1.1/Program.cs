@@ -15,7 +15,8 @@ namespace ExpressionParser_v1._1
         static void Main(string[] args)
         {
             Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo("en-US");
-            Manager.Manage(@"C:/Users/user/Expression.txt");
+            Manager manager = new Manager();
+            manager.Manage(@"C:/Users/user/Expression.txt");
         }
     }
 }
