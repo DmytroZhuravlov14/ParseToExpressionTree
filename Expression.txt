@@ -1,2 +1,2 @@
-12.0 + 14.0
-write: UCHEBA V UNIVERE KAIF
+(12.0 + 11.0) * (3.0 - 2.0) - (11.0 : (7.0 * x))
+write: My project is great

@@ -10,11 +10,9 @@ using System.IO;
 
 namespace ExpressionParser_v1._1
 {
-    static class Tokenizer
+    class Tokenizer
     {
-        public static List<Model> objectList;
-
-        static List<Parser> parsers = new List<Parser>
+        private List<Parser> parsers = new List<Parser>
         {
             new Parser("^[0-9]{1,}[/.][0-9]{1,}", (value) => new Number{ Value = value }),
             new Parser("^[a-zA-Z]{1,}", (_) => new Parameter()),
@@ -23,19 +21,20 @@ namespace ExpressionParser_v1._1
             new Parser("^[/*]{1}", (_) => new Multiply()),
             new Parser("^:{1}", (_) => new Divide()),
             new Parser("^[/^]{1}", (_) => new Power()),
+            new Parser("^[(]", (value) => new OpenBracket{ Value = value }),
+            new Parser("^[)]", (value) => new CloseBracket{ Value = value })
         };
 
-        public static List<Model> Tokenize(string input)
+        public List<Model> Tokenize(string input)
         {
             string stringBuilder = new StringBuilder(input).ToString();
             List<Model> bagList = new List<Model>();
             while (stringBuilder != string.Empty)
             {
-                Parser parser = parsers.Where(p => p._regex.Match(stringBuilder).Success).First();       
+                Parser parser = parsers.Where(p => p._regex.Match(stringBuilder).Success).First();
                 Model dataBag = parser.Parse(stringBuilder);
                 bagList.Add(dataBag);
-                stringBuilder = stringBuilder.Remove(0, parser._regex.Match(stringBuilder).Value.Length);
-                stringBuilder = Parser.DeleteWhiteSpace(stringBuilder);
+                stringBuilder = stringBuilder.Remove(0, parser._regex.Match(stringBuilder).Value.Length).TrimStart();
             }
             return bagList;
         }

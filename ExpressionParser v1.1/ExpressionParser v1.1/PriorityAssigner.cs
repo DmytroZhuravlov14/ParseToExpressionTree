@@ -7,43 +7,42 @@ using ExpressionParser_v1._1;
 
 namespace ExpressionParser_v1._1
 {
-    static class PriorityAssigner
+    class PriorityAssigner
     {
-        public static void AssignPriorities()
+        private Dictionary<string, int> _priorities;
+
+        public PriorityAssigner()
         {
-            AssignPrioritiesUnchecked();
-            CheckAssign();
+            _priorities = new Dictionary<string, int>()
+            {
+                { "Parameter", -1 },
+                { "Number", -1 },
+                { "OpenBracket" , -1 },
+                { "CloseBracket", -1 },
+                { "Plus", 1 },
+                { "Minus", 1 },
+                { "Multiply", 2 },
+                { "Divide", 2 },
+                { "Power", 3 }
+            };
+
         }
 
-        static void AssignPrioritiesUnchecked()
+        public void AssignPriorities(List<Model> objectList)
         {
-            List<string> no = new List<string> { "Parameter", "Number" };
-            List<string> low = new List<string> { "Plus", "Minus" };
-            List<string> mid = new List<string> { "Multiply", "Divide" };
-            List<string> high = new List<string> { "Power" };
-            Dictionary<List<string>, int> dic = new Dictionary<List<string>, int> { };
-            dic.Add(no, -1);
-            dic.Add(low, 1);
-            dic.Add(mid, 2);
-            dic.Add(high, 3);
-            foreach (var objectListItem in Tokenizer.objectList)
+            AssignPrioritiesUnchecked(objectList);
+
+            if (objectList.Any(e => e.Priority == 0))
             {
-                foreach (var dicItem in dic.Keys)
-                {
-                    if (dicItem.Contains(objectListItem.Name))
-                    {
-                        objectListItem.Priority = dic[dicItem];
-                    }
-                }
+                Console.WriteLine("Undefined object was found");
             }
         }
 
-        static void CheckAssign()
+        private void AssignPrioritiesUnchecked(List<Model> objectList)
         {
-            foreach (var item in Tokenizer.objectList)
+            foreach (var item in objectList)
             {
-                if (item.Priority == 0)
-                    Console.WriteLine("Undefined object was found");
+                item.Priority = _priorities[item.Name];
             }
         }
     }

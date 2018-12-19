@@ -43,22 +43,27 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Aggregator.cs" />
-    <Compile Include="Divide.cs" />
-    <Compile Include="Minus.cs" />
-    <Compile Include="Model.cs" />
-    <Compile Include="Multiply.cs" />
-    <Compile Include="Number.cs" />
-    <Compile Include="Parameter.cs" />
+    <Compile Include="LambdaTreeBuilder.cs" />
+    <Compile Include="Manager.cs" />
+    <Compile Include="Model\CloseBracket.cs" />
+    <Compile Include="Model\OpenBracket.cs" />
+    <Compile Include="BracketPriorityAssigner.cs" />
+    <Compile Include="Model\Divide.cs" />
+    <Compile Include="Model\Minus.cs" />
+    <Compile Include="Model\Model.cs" />
+    <Compile Include="Model\Multiply.cs" />
+    <Compile Include="Model\Number.cs" />
+    <Compile Include="Model\Parameter.cs" />
     <Compile Include="Parser.cs" />
     <Compile Include="PriorityAssigner.cs" />
     <Compile Include="StaticMethodsExecution.cs" />
     <Compile Include="Tokenizer.cs" />
-    <Compile Include="Plus.cs" />
-    <Compile Include="Power.cs" />
+    <Compile Include="Model\Plus.cs" />
+    <Compile Include="Model\Power.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Sign.cs" />
-    <Compile Include="ValueObject.cs" />
+    <Compile Include="Model\Sign.cs" />
+    <Compile Include="Model\ValueObject.cs" />
     <Compile Include="VariableAssigner.cs" />
   </ItemGroup>
   <ItemGroup>
