@@ -17,7 +17,7 @@ namespace ExpressionParser_v1._1
 
         public Model Build(List<Model> ObjectList)
         {
-            VariableAssigner.AssignVariables(ObjectList, 12.0);
+            VariableAssigner.AssignVariables(ObjectList, 2.0);
             _priorityAssigner.AssignPriorities(ObjectList);
             BracketPriorityAssigner.AssignBracketPriorities(ObjectList);
             Model model = Aggregator.AggregateBig(ObjectList);
